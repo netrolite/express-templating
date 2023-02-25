@@ -1,10 +1,14 @@
 import express from "express";
 const app = express();
-const port = 4000;
+const port = 3000;
+import hbs from "express-handlebars";
 import path from "path";
 
 
 const viewsPath = path.join(__dirname, "../public/views");
+
+app.engine("handlebars", hbs.engine());
+app.set("view engine", "handlebars");
 
 app.get("/", (req, res) => {
   res.sendFile(`${viewsPath}/index.html`);
@@ -21,6 +25,7 @@ app.get("/about-us", (req, res) => {
 
 // 404 page
 app.use((req, res) => {
+  res.status(404);
   res.sendFile(`${viewsPath}/404.html`)
 })
 
